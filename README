@@ -1,0 +1,88 @@
+REQUIRE:
+Yii 1.1 (develop on 1.1.10)
+
+HOWTO:
+- Copy ThpViewRenderer to your component directory
+/protected/components/...
+
+- configure your project add components->viewRenderer settings
+return array(
+	'import' => array(
+		'application.models.*',
+		'application.components.*',
+	),
+	...
+
+	'components' => array(
+		...
+
+		'viewRenderer' => array(
+			'class' => 'ThpViewRenderer',
+		),
+	),
+);
+
+INFO:
+If you already using PHP template syntax you may don't worry. This ViewRenderer
+backward compatible with PHP syntax.
+Enable component and enjoy it.
+
+After compilation you can see your template at /protected/runtime/view
+
+SYNTAX:
+==================> PHP Syntax
+<? if(false): ?>
+<? endif; ?>
+
+<? foreach($arr as $e): ?>
+<? endforeach; ?>
+
+and any more are working, for compatibility testing are use gii extension
+
+==================> THP-like Syntax
+THP-like syntax is PHP syntax with thp processing.
+the main problem is that a document was obtained html valid
+The following problems are solved:
+1) dynamic block of code (such as if, foreach, and other) set as html comment
+2) vars on layout set as text and minimalist.
+
+<!--<? if(false): ?>-->
+<!--<? endif; ?>-->
+
+<!--<? foreach($arr as $e): ?>-->
+<!--<? endforeach; ?>-->
+
+and other
+you can using yii construction and widget, without problem
+<!--<? CForm:: .... ?>-->
+
+==================> THP Syntax
+this is minimalist syntax for template.
+--- blocks layouts
+<!--!! --> - all inside is cut from template
+
+<!--// CUT -->
+All between is cut form template 
+<!--\\ CUT -->
+
+<!--// IFSET|IFTRUE|IFEMPTY thpvar --> = if(isset|!empty|empty(thpvar))
+<!--|| ELSE -->
+<!--\\ IF(or IFSET|IFTRUE|IFEMPTY) --> = endif
+
+<!--// LOOP thpvar --> = foreach($thpvar as $e)
+{e.var} = {.var}
+<!--\\ LOOP (may add thpvar) --> = endforeach
+
+this construction already support thpvar conversion described below
+
+--- vars layout (thpvar):
+{thisvar} = <?=$thisvar;?>
+{el.thisvar} = <?=$el['thisvar'];?>
+{el->thisvar} = <?=$el->thisvar;?>
+{el->thismethod()} = <?=$el->thismethod();?>
+
+this is reduced notation
+{.thisvar} = <?=$e['thisvar'];?>
+
+you may do arbitrary combination of code
+{.var->obj->obj.el.el} = <?=$e['var']->obj->obj['el']['el'];?>
