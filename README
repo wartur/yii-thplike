@@ -65,7 +65,7 @@ this is minimalist syntax for template.
 All between is cut form template 
 <!--\\ CUT -->
 
-<!--// IFSET|IFTRUE|IFEMPTY thpvar --> = if(isset|!empty|empty(thpvar))
+<!--// IFSET|IFEMPTY|IFTRUE thpvar --> = if(isset(thpvar)|empty(thpvar)|thpvar)
 <!--|| ELSE -->
 <!--\\ IF(or IFSET|IFTRUE|IFEMPTY) --> = endif
 

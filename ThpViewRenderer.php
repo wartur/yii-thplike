@@ -164,14 +164,6 @@ class ThpViewRenderer extends CViewRenderer
 						
 						$result.= '<?php if(isset($'.$prepeare_operator.')): ?>';
 					}
-					elseif(strpos($operator, 'IFTRUE') == 3)
-					{
-						$raw_operator = trim(substr($operator, 9));
-						
-						$prepeare_operator = $this->replacePointToArrayInternal($raw_operator);
-						
-						$result.= '<?php if(!empty($'.$prepeare_operator.')): ?>';
-					}
 					elseif(strpos($operator, 'IFEMPTY') == 3)
 					{
 						$raw_operator = trim(substr($operator, 10));
@@ -179,6 +171,14 @@ class ThpViewRenderer extends CViewRenderer
 						$prepeare_operator = $this->replacePointToArrayInternal($raw_operator);
 						
 						$result.= '<?php if(empty($'.$prepeare_operator.')): ?>';
+					}
+					elseif(strpos($operator, 'IFTRUE') == 3)
+					{
+						$raw_operator = trim(substr($operator, 9));
+						
+						$prepeare_operator = $this->replacePointToArrayInternal($raw_operator);
+						
+						$result.= '<?php if($'.$prepeare_operator.'): ?>';
 					}
 					else
 					{
