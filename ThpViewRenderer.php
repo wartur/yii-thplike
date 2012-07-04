@@ -22,7 +22,7 @@
  * Обратно совместимый с PHP, позволяет компилировать THP-Like php код
  * 
  * @author		Krivtsov Artur (wartur) <kav@wartur.ru> | Made in Russia
- * @version		1.3
+ * @version		1.4
  */
 class ThpViewRenderer extends CViewRenderer
 {
@@ -42,8 +42,8 @@ class ThpViewRenderer extends CViewRenderer
 	const REPLACE_THPVAR_BEGIN = '<?=$';
 	const REPLACE_THPVAR_END = ';?>';
 	//
-	// Паттерн выделения php кода, для защиты от замены фигурных скобок внутри php
-	const PATTERN_PREG_PHP = '#<\?(.+?)\?>#s';
+	// Паттерн выделения php кода, для защиты от замены фигурных скобок внутри php, script, style, (onClock, onEtc..)
+	const PATTERN_PREG_EXCEPTION = '#<\?(.+?)\?>|<style(.+?)</style>|<script(.+?)</script>|on(\w+)="(.+?)"#s';
 	//
 	// Паттерн выделения переменных thp кода
 	const PATTERN_PREG_THPVAR = '#\{(.+?)\}#s';
@@ -233,8 +233,8 @@ class ThpViewRenderer extends CViewRenderer
 		$result = '';
 		
 		// находим все php блоки, исключаем их из замены
-		$splitcount = preg_match_all(self::PATTERN_PREG_PHP, $contents, $splitmatch);
-		$splitdata = preg_split(self::PATTERN_PREG_PHP, $contents);
+		$splitcount = preg_match_all(self::PATTERN_PREG_EXCEPTION, $contents, $splitmatch);
+		$splitdata = preg_split(self::PATTERN_PREG_EXCEPTION, $contents);
 		$splitmatch = $splitmatch[0]; // Получим нужный блок
 		//
 		// генерация результирующего файла
