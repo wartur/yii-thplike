@@ -12,8 +12,8 @@
  *
  * @author		Krivtsov Artur (wartur) <kav@wartur.ru> | Made in Russia
  * @copyright	Krivtsov Artur © 2010-2012
- * @link		http://thp.wartur.ru
- * @license		http://thp.wartur.ru/license
+ * @link		https://github.com/wartur/yii-thplike
+ * @license		New BSD License
  */
 
 /**
